@@ -10,7 +10,7 @@ http://inamidst.com/phenny/
 import select
 
 poll = select.poll()
-channels = [('#NS-Globe', '/home/embo/Desktop/test')]
+channels = [('#udl-dev', '/home/embo/Desktop/test')]
 message = "this is a test"
 mapping = dict()
 for c in channels:
@@ -23,7 +23,7 @@ def do_poll(phenny, input):
    actions = poll.poll()
    for a in actions:
       channel = mapping.get(a)
-      phenny.write(['MSG', channel], message)
+      phenny.write(['PRIVMSG', channel], message)
 
 def startpoll(phenny, input):
    do_poll(phenny, input)
