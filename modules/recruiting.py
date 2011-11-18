@@ -19,9 +19,13 @@ for c in channels:
    poll.register(fil)
    
    
-def poll(phenny, input):
+def do_poll(phenny, input):
    actions = poll.poll()
    for a in actions:
       channel = mapping.get(a)
       phenny.write(['MSG', channel], message)
 
+def startpoll(phenny, input):
+   do_poll(phenny, input)
+   phenny.say("Recruitment polling started.")
+startpoll.commands = ["startpoll"]
