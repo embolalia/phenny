@@ -43,4 +43,4 @@ def sc(phenny, input):
    link = link + str(res)
    phenny.say(link)
 
-link.commands = ["sc"]
+sc.commands = ["sc"]

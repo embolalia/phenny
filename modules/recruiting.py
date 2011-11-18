@@ -14,8 +14,8 @@ channels = [('#NS-Globe', '/home/embo/Desktop/test')]
 message = "this is a test"
 mapping = dict()
 for c in channels:
-   fil = open(c[2])
-   mapping.update(fil=c[1])
+   fil = open(c[1])
+   mapping.update(fil=c[0])
    poll.register(fil)
    
    
