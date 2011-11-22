@@ -2,6 +2,7 @@
 """
 twitter.py - Phenny Twitter Module
 Copyright 2008-10, Michael Yanovich, opensource.osu.edu/~yanovich/wiki/
+Tweetwatch features copyright 2011, Edward Powell, embolalia.net
 Licensed under the Eiffel Forum License 2.
 
 http://inamidst.com/phenny/
@@ -95,8 +96,10 @@ twat.commands = ['twatinfo']
 #Tweetwatch functions
 def saylast(phenny, input):
    global lasts
+   global watch
+   global sch
+   
    if watch:
-      sch.enter(60, 1, saylast, (phenny, input))
       for twituser in twitter_watch:
          try:
             statuses = api.GetUserTimeline(twituser)
@@ -106,16 +109,19 @@ def saylast(phenny, input):
                lasts[twituser] = recent
          except:
             phenny.reply("You have inputted an invalid user: " + twituser)
+      sch.enter(60, 1, saylast, (phenny, input))
+      sch.run()
 		
 def tweetwatcher(phenny, input):
    global watch
+   global sch
    if input.group(2) == 'off':
       watch = False
       phenny.say("Tweetwatcher is now off.")
    elif input.group(2) == 'on':
       watch = True
       saylast(phenny, input)
-      sch.enter(60, 1, saylast, (phenny, input))
+      phenny.say("I will now watch for new tweets.")
 tweetwatcher.commands = ['tweetwatcher']
 
 if __name__ == '__main__':
