@@ -105,7 +105,7 @@ def saylast(phenny, input):
             statuses = api.GetUserTimeline(twituser)
             recent = str([s.text for s in statuses][0])
             if twituser not in lasts or lasts[twituser] != recent:
-               phenny.say("TWEETWATCH: <" + twituser + "> " + recent)
+               phenny.say("TWEETWATCH: @" + twituser + ": " + recent)
                lasts[twituser] = recent
          except:
             phenny.reply("You have inputted an invalid user: " + twituser)
@@ -115,13 +115,14 @@ def saylast(phenny, input):
 def tweetwatcher(phenny, input):
    global watch
    global sch
-   if input.group(2) == 'off':
-      watch = False
-      phenny.say("Tweetwatcher is now off.")
-   elif input.group(2) == 'on':
-      watch = True
-      saylast(phenny, input)
-      phenny.say("I will now watch for new tweets.")
+   if input.admin:
+      if input.group(2) == 'off':
+         watch = False
+         phenny.say("Tweetwatcher is now off.")
+      elif input.group(2) == 'on':
+         watch = True
+         saylast(phenny, input)
+         phenny.say("I will now watch for new tweets.")
 tweetwatcher.commands = ['tweetwatcher']
 
 if __name__ == '__main__':

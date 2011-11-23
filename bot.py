@@ -180,6 +180,12 @@ class Phenny(irc.Bot):
             s.args = args
             s.admin = origin.nick in self.config.admins
             s.owner = origin.nick == self.config.owner
+            s.twitter_username = self.config.twitter_username
+            s.twitter_password = self.config.twitter_password
+            s.wa_host = self.config.wa_host
+            s.wa_db = self.config.wa_db
+            s.wa_user = self.config.wa_user
+            s.wa_pass = self.config.wa_pass
             return s
 
       return CommandInput(text, origin, bytes, match, event, args)
