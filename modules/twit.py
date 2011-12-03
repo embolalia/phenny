@@ -27,7 +27,7 @@ def gettweet(phenny, input):
 		twituser = str(twituser)
 		statuses = api.GetUserTimeline(twituser)
 		recent = [s.text for s in statuses][0]
-		phenny.say("<" + twituser + "> " + str(recent))
+		phenny.say("<" + twituser + "> " + unicode(recent))
 	except:	
 		phenny.reply("You have inputted an invalid user.")
 gettweet.commands = ['twit']
@@ -104,12 +104,16 @@ def saylast(phenny, input):
       for twituser in twitter_watch:
          try:
             statuses = api.GetUserTimeline(twituser)
-            recent = str([s.text for s in statuses][0])
+            recent = unicode([s.text for s in statuses][0])
             if twituser not in lasts or lasts[twituser] != recent:
                phenny.say("TWEETWATCH: @" + twituser + ": " + recent)
                lasts[twituser] = recent
-         except:
-            phenny.reply("You have inputted an invalid user: " + twituser)
+         except Exception as inst:
+            phenny.reply("An exception was raised for user: " + twituser)
+            phenny.reply("Is this user valid?")
+            print type(inst)
+            print inst.args
+            print inst
       sch.enter(watch_wait, 1, saylast, (phenny, input))
       sch.run()
 		
