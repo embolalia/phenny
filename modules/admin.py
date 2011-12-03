@@ -59,5 +59,15 @@ def me(phenny, input):
 me.rule = (['me'], r'(#?\S+) (.*)')
 me.priority = 'low'
 
+def mode(phenny, input):
+   if input.sender.startswith('#'): return
+   if input.admin:
+      mode = input.group(1)
+      phenny.write(('MODE ', phenny.nick + ' ' + mode))
+mode.rule = r'\.mode ([\+-]\S+)'
+mode.priority = 'low' 
+mode.example = '.mode +b'
+
+
 if __name__ == '__main__': 
    print __doc__.strip()

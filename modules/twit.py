@@ -15,7 +15,8 @@ import sched, time
 
 api = twitter.Api()
 
-twitter_watch = ['hankgreen', 'realjohngreen', 'realembolalia']
+twitter_watch = ['hankgreen', 'realjohngreen']
+watch_wait = 75
 watch = False
 lasts = dict()
 sch = sched.scheduler(time.time, time.sleep)
@@ -109,7 +110,7 @@ def saylast(phenny, input):
                lasts[twituser] = recent
          except:
             phenny.reply("You have inputted an invalid user: " + twituser)
-      sch.enter(60, 1, saylast, (phenny, input))
+      sch.enter(watch_wait, 1, saylast, (phenny, input))
       sch.run()
 		
 def tweetwatcher(phenny, input):

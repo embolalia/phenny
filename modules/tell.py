@@ -104,17 +104,41 @@ f_remind.rule = ('$nick', ['tell', 'ask'], r'(\S+) (.*)')
 
 def getReminders(phenny, channel, key, tellee): 
    lines = []
-   template = "%s: %s <%s> %s %s %s"
+   #template = "%s: %s <%s> %s %s %s"
    today = time.strftime('%d %b', time.gmtime())
 
    for (teller, verb, datetime, msg) in phenny.reminders[key]: 
       if datetime.startswith(today): 
          datetime = datetime[len(today)+1:]
-      lines.append(template % (tellee, datetime, teller, verb, tellee, msg))
+      #lines.append(template % (tellee, datetime, teller, verb, tellee, msg))
+      lines.append(humanizeLine(tellee, datetime, teller, verb, msg))
 
    try: del phenny.reminders[key]
    except KeyError: phenny.msg(channel, 'Er...')
    return lines
+
+def humanizeLine(tellee, datetime, teller, verb, msg):
+   template = "%s: %s <%s> %s %s %s"
+
+   line =  datetime + " - " + tellee + ", " + teller
+   
+   msg = re.sub("\bhe\b|\bshe\b|\bone\b|\bshe/he\b|\bs/he\b|\bthey\b|\bey\b", "you", msg)
+   msg = re.sub("\bhis\b|\bher\b|\btheir\b|\btheirs\b|\beir\b|\beirs\b", "yours", msg)
+   msg = re.sub("\bhimself\b|\bherself\b|\bthemself\b|\beirself\b|\bemself\b", "yourself", msg)
+
+   #Ought to be changed to allow setting of one's preferred pronouns...
+   msg = re.sub("\bI\b", "they", msg)
+   msg = re.sub("\bme\b", "they", msg)
+   msg = re.sub("\bmy\b", "their", msg)
+   msg = re.sub("\bmine\b", "theirs", msg)
+
+   if verb == "ask": #need to figure out how to "ask to"
+      line = line + " wants to know " + msg
+   else:
+      line = line + " wanted me to tell you " + msg
+
+   return line
+      
 
 def message(phenny, input): 
    if not input.sender.startswith('#'): return
