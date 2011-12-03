@@ -223,7 +223,7 @@ def ytinfo(phenny, input):
    views = re.search('(VIEWS: )(.*)', bytes).group(2)
    comments = re.search('(COMMENTS: )(.*)', bytes).group(2)
    #Favorite, like, dislike
-   favorite = re.search('(FAVORITE: )(\d+) (\d+) (\d+)', bytes)
+   favorite = re.search('(FAVORITE: )([\d,]+) ([\d,]+) ([\d,]+)', bytes)
    likes = favorite.group(3)
    dislikes = favorite.group(4)
    
