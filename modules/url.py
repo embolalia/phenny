@@ -230,7 +230,7 @@ def ytinfo(phenny, input):
    message = '[YouTube] Title: ' + title + ' | Uploader: ' + uploader + ' | Uploaded: ' + uploaded + ' | Length: ' + length + ' | Views: ' + views + ' | Comments: ' + comments + ' | Likes: ' + likes + ' | Dislikes: ' + dislikes
    
    phenny.say(message)   
-ytinfo.rule = '.*(youtube.com/watch\S*v=|youtu.be/)([\w-]+).*'
+ytinfo.rule = '.*(youtube.com/watch\S*v=|youtu.be/)([a-zA-Z0-9-]+).*'
 
 if __name__ == '__main__':
     print __doc__.strip()
