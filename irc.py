@@ -29,6 +29,7 @@ class Bot(asynchat.async_chat):
       asynchat.async_chat.__init__(self)
       self.set_terminator('\n')
       self.buffer = ''
+      self.raw = ''
 
       self.nick = nick
       self.user = nick
@@ -100,6 +101,9 @@ class Bot(asynchat.async_chat):
       if line.endswith('\r'): 
          line = line[:-1]
       self.buffer = ''
+      
+      #Adding a way to get a raw line for .whois
+      self.raw = line
 
       # print line
       if line.startswith(':'): 
