@@ -41,6 +41,7 @@ def whois311(phenny, input):
         rl = raw.group(5)
 whois311.event = '311'
 whois311.rule = '.*'
+whois311.thread = False
 
 def whois319(phenny, input):
     if whois:
@@ -49,8 +50,6 @@ def whois319(phenny, input):
 whois319.event = '319'
 whois319.rule = '(.*)'
 
-"""
-#Not sure what's going on with this...
 def whois317(phenny, input):
     global idle, signon
     if whois:
@@ -59,7 +58,7 @@ def whois317(phenny, input):
         signon = raw.groups(4)
 whois317.event = '317'
 whois317.rule = '.*'
-"""
+whois311.thread = False
 
 def whois318(phenny, input):
     if whois:
