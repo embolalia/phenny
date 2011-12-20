@@ -100,6 +100,7 @@ def py(phenny, input):
 py.commands = ['py']
 
 def wa(phenny, input):
+    """Wolfram Alpha calculator"""
 	if not input.group(2):
 		return phenny.reply("No search term.")
 	query = input.group(2).encode('utf-8')
