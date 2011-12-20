@@ -107,18 +107,7 @@ def wa(phenny, input):
 	uri = 'http://tumbolia.appspot.com/wa/'
 	answer = web.get(uri + web.urllib.quote(query.replace('+', '%2B')))
 	if answer:
-		# test case 1:
-		# 	input: .wa today+1 week
-		#	output: today+1 week;Tuesday, December 27, 2011;12\/27\/2011  (month\/day\/year);7 days from now;1 week from now;5 weekdays from now;361st day;52nd week;start of Soviet War in Afghanistan (1979): 32nd anniversary;Radio City Music Hall opens (1932): 79th anniversary;Spanish Constitution of 1978 is ratified (1978): 33rd anniversary;Rome and Vienna airport attacks (1985): 26th anniversary;1939 Erzincan earthquake (1939): 72nd anniversary;sunrise->7:50 am CST, sunset->5
-
-		# test case 2:
-		#	input: .wa circumference of the sun * pi
-		#	output: Sun->equatorial circumference pi;8.531 million miles;1.373&times;10^7 km  (kilometers);1.373&times;10^10 meters;45.79 light seconds;Light travel time t in vacuum from t = x\/c:, ->46 seconds;Light travel time t in an optical fiber t = 1.48x\/c:, ->1.1 minutes
-
-		# output seems to be "interpreted input;output;different way of writing;additional information;..;..;..;..;..;more additional information"
 		waOutputArray = string.split(answer, ";")
-
-		phenny.say("[DEVMSG]raw answer: "+answer)
 		phenny.say(waOutputArray[0]+" = "+waOutputArray[1])
 		waOutputArray = []
 
