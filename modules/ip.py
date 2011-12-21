@@ -8,10 +8,10 @@ Licensed under the Eiffel Forum License 2.
 http://inamidst.com/phenny/
 """
 
-import re, string, web
+import re, web
 
 def ip(phenny, input):
-    """IP Lookup tool"""
+	"""IP Lookup tool"""
 	if not input.group(2):
 		return phenny.reply("No search term.")
 	query = input.group(2).encode('utf-8')
@@ -36,8 +36,8 @@ def ip(phenny, input):
 		phenny.say(response)
 	else:
 		phenny.reply('Sorry, no result.')
-wa.commands = ['iplookup']
-wa.example = '.iplookup 8.8.8.8'
+ip.commands = ['iplookup']
+ip.example = '.iplookup 8.8.8.8'
 
 if __name__ == '__main__':
 	print __doc__.strip()
