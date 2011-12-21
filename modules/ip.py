@@ -32,7 +32,14 @@ def ip(phenny, input):
 			state = re.search("(?:State/Region:[ ]?)([\S ]*)(?:\r)", answer)
 			country = re.search("(?:Country:[ ]?)([\S ]*)(?:  \r)", answer)
 
-			response = "[IP/Host Lookup] Hostname: "+host+" | ISP: "+isp+" | Organization: "+org+" | Type: "+typ+" | Assignment: "+assign+" | Location: "+city+", "+state+", "+country+"."
+			response = "[IP/Host Lookup] Hostname: "+host
+			response += " | ISP: "+isp
+			response += " | Organization: "+org
+			response += " | Type: "+typ
+			response += " | Assignment: "+assign
+			response += " | Location: "+city
+			response += ", "+state
+			response += ", "+country+"."
 		phenny.say(response)
 	else:
 		phenny.reply('Sorry, no result.')
