@@ -17,8 +17,8 @@ from textwrap import dedent as trim
 dotdir = os.path.expanduser('~/.phenny')
 
 def check_python_version(): 
-   if sys.version_info < (2, 4): 
-      error = 'Error: Requires Python 2.4 or later, from www.python.org'
+   if sys.version_info < (2, 7): 
+      error = 'Error: Requires Python 2.7 or later. Try python2.7 phenny'
       print >> sys.stderr, error
       sys.exit(1)
 
