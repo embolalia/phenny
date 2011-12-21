@@ -20,23 +20,30 @@ def ip(phenny, input):
 	if answer:
 		invalid = re.search("(?:INVALID: )([\S ]*)", answer)
 		if invalid:
-			response = "[IP/Host Lookup] "+invalid
+			response = "[IP/Host Lookup] "+invalid.group(1)
 		else:
 			#parse stuffs.
-			host = re.search("(?:Hostname:[ ]?)([\S ]*)(?:\r)", answer)
-			isp = re.search("(?:ISP:[ ]?)([\S ]*)(?:\r)", answer)
+			host = re.search("(?:Hostname:[ ]?)([\S ]*)", answer)
+			isp = re.search("(?:ISP:[ ]?)([\S ]*)", answer)
 			org = re.search("(?:Organization:[ ]?)([\S ]*)(?:Services:)", answer)
-			typ = re.search("(?:Type:[ ]?)([\S ]*)(?:\r)", answer)
-			assign = re.search("(?:Assignment:[ ]?)([\S ]*)(?:\r)", answer)
-			city = re.search("(?:City:[ ]?)([\S ]*)(?:\r)", answer)
-			state = re.search("(?:State/Region:[ ]?)([\S ]*)(?:\r)", answer)
-			country = re.search("(?:Country:[ ]?)([\S ]*)(?:  \r)", answer)
+			typ = re.search("(?:Type:[ ]?)([\S ]*)", answer)
+			assign = re.search("(?:Assignment:[ ]?)([\S ]*)", answer)
+			city = re.search("(?:City:[ ]?)([\S ]*)", answer)
+			state = re.search("(?:State/Region:[ ]?)([\S ]*)", answer)
+			country = re.search("(?:Country:[ ]?)([\S ]*)(?:  )", answer)
 
-			response = "[IP/Host Lookup] Hostname: "+host+" | ISP: "+isp+" | Organization: "+org+" | Type: "+typ+" | Assignment: "+assign+" | Location: "+city+", "+state+", "+country+"."
+			response = "[IP/Host Lookup] Hostname: "+host.group(1)
+			response += " | ISP: "+isp.group(1)
+			response += " | Organization: "+org.group(1)
+			response += " | Type: "+typ.group(1)
+			response += " | Assignment: "+assign.group(1)
+			response += " | Location: "+city.group(1)
+			response += ", "+state.group(1)
+			response += ", "+country.group(1)+"."
 		phenny.say(response)
 	else:
 		phenny.reply('Sorry, no result.')
-ip.commands = ['iplookup']
+ip.commands = ['iplookup','ip']
 ip.example = '.iplookup 8.8.8.8'
 
 if __name__ == '__main__':
