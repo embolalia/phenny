@@ -32,17 +32,17 @@ def ip(phenny, input):
 			state = re.search("(?:State/Region:[ ]?)([\S ]*)", answer)
 			country = re.search("(?:Country:[ ]?)([\S ]*)(?:  )", answer)
 
-			if !host or !isp or !org or !typ or !assign or !city or !state or !country:
-				phenny.say("[IP/Host Lookup] Something went wrong, please try again."
-
-			response = "[IP/Host Lookup] Hostname: "+host.group(1)
-			response += " | ISP: "+isp.group(1)
-			response += " | Organization: "+org.group(1)
-			response += " | Type: "+typ.group(1)
-			response += " | Assignment: "+assign.group(1)
-			response += " | Location: "+city.group(1)
-			response += ", "+state.group(1)
-			response += ", "+country.group(1)+"."
+			if not host or not isp or not org or not typ or not assign or not city or not state or not country:
+				response = "[IP/Host Lookup] Something went wrong, please try again."
+			else:
+				response = "[IP/Host Lookup] Hostname: "+host.group(1)
+				response += " | ISP: "+isp.group(1)
+				response += " | Organization: "+org.group(1)
+				response += " | Type: "+typ.group(1)
+				response += " | Assignment: "+assign.group(1)
+				response += " | Location: "+city.group(1)
+				response += ", "+state.group(1)
+				response += ", "+country.group(1)+"."
 		phenny.say(response)
 	else:
 		phenny.reply('Sorry, no result.')
