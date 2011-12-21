@@ -100,7 +100,7 @@ def py(phenny, input):
 py.commands = ['py']
 
 def wa(phenny, input):
-    """Wolfram Alpha calculator"""
+	"""Wolfram Alpha calculator"""
 	if not input.group(2):
 		return phenny.reply("No search term.")
 	query = input.group(2).encode('utf-8')
@@ -108,7 +108,7 @@ def wa(phenny, input):
 	answer = web.get(uri + web.urllib.quote(query.replace('+', '%2B')))
 	if answer:
 		waOutputArray = string.split(answer, ";")
-		phenny.say(waOutputArray[0]+" = "+waOutputArray[1])
+		phenny.say('[WOLFRAM] ' + waOutputArray[0]+" = "+waOutputArray[1])
 		waOutputArray = []
 
 
