@@ -69,7 +69,7 @@ mode.rule = r'\.mode ([\+-]\S+)'
 mode.priority = 'low'
 
 def invite(phenny, input):
-    phenny.write(('JOIN ', input.group(1))
+    phenny.write(('JOIN ', input))
 invite.event = 'INVITE'
 invite.rule = '.*'
 
