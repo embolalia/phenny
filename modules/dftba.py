@@ -9,6 +9,7 @@ import urllib
 import simplejson as json
 
 def shorten(phenny, input):
+    """Shorten a URL with DFT.BA"""
     args = input.groups()
     url = args[0]
     code = None
@@ -26,6 +27,7 @@ def shorten(phenny, input):
     phenny.say(msg)
 shorten.rule = '\.shorten (\S+)( ?\S+)?'
 shorten.priority = 'high'
+shorten.example = '.shorten http://example.com example'
 
 
 def expand(phenny, input):

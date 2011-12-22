@@ -91,6 +91,7 @@ c.commands = ['c']
 c.example = '.c 5 + 3'
 
 def py(phenny, input):
+    """Evaluate a Python expression"""
 	query = input.group(2).encode('utf-8')
 	uri = 'http://tumbolia.appspot.com/py/'
 	answer = web.get(uri + web.urllib.quote(query))
@@ -98,6 +99,7 @@ def py(phenny, input):
 		phenny.say(answer)
 	else: phenny.reply('Sorry, no result.')
 py.commands = ['py']
+py.example = '.py len([1,2,3])'
 
 def wa(phenny, input):
 	"""Wolfram Alpha calculator"""

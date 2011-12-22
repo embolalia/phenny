@@ -86,6 +86,7 @@ r_query = re.compile(
 )
 
 def gcs(phenny, input): 
+   """Compare the number of Google search results"""
    if not input.group(2):
       return phenny.reply("Nothing to compare.")
    queries = r_query.findall(input.group(2))
@@ -105,6 +106,7 @@ def gcs(phenny, input):
    reply = ', '.join('%s (%s)' % (t, formatnumber(n)) for (t, n) in results)
    phenny.say(reply)
 gcs.commands = ['gcs', 'comp']
+gcs.example = '.gcs foo bar'
 
 r_bing = re.compile(r'<h3><a href="([^"]+)"')
 
@@ -147,6 +149,7 @@ def duck_search(query):
    if m: return web.decode(m.group(1))
 
 def duck(phenny, input): 
+   """Queries Duck Duck Go for the specified input."""
    query = input.group(2)
    if not query: return phenny.reply('.ddg what?')
 
@@ -159,8 +162,10 @@ def duck(phenny, input):
       phenny.bot.last_seen_uri[input.sender] = uri
    else: phenny.reply("No results found for '%s'." % query)
 duck.commands = ['duck', 'ddg']
+duck.example = '.ddg foo'
 
 def search(phenny, input): 
+   """Searches Google, Bing, and Duck Duck Go."""
    if not input.group(2): 
       return phenny.reply('.search for what?')
    query = input.group(2).encode('utf-8')
@@ -184,8 +189,10 @@ def search(phenny, input):
 
    phenny.reply(result)
 search.commands = ['search']
+search.example = '.search foo'
 
 def suggest(phenny, input): 
+   """Suggest terms starting with given input"""
    if not input.group(2):
       return phenny.reply("No query term.")
    query = input.group(2).encode('utf-8')
@@ -195,6 +202,7 @@ def suggest(phenny, input):
       phenny.say(answer)
    else: phenny.reply('Sorry, no result.')
 suggest.commands = ['suggest']
+
 
 if __name__ == '__main__': 
    print __doc__.strip()
