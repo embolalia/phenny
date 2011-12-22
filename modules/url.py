@@ -164,73 +164,76 @@ show_title.rule = '.*((http|https|ftp)(://\S+)).*'
 show_title.priority = 'high'
 
 def ytinfo(phenny, input):
-   #Right now, this uses a parsing script from rscript.org. Eventually, I'd like
-   #to use the YouTube API directly.
+    #Right now, this uses a parsing script from rscript.org. Eventually, I'd
+    #like to use the YouTube API directly.
 
-   #Grab info from rscript
-   uri = 'http://rscript.org/lookup.php?type=youtubeinfo&id=' + input.group(2)
-   redirects = 0
-   while True:
-       req = urllib2.Request(uri, headers={'Accept':'text/html'})
-       req.add_header('User-Agent', 'OpenAnything/1.0 +http://diveintopython.org/')
-       u = urllib2.urlopen(req)
-       info = u.info()
-       u.close()
-       # info = web.head(uri)
-       if not isinstance(info, list):
-           status = '200'
-       else:
-           status = str(info[1])
-           info = info[0]
-       if status.startswith('3'):
-           uri = urlparse.urljoin(uri, info['Location'])
-       else: break
-       redirects += 1
-       if redirects >= 50:
-           return "Too many re-directs."
-   try: mtype = info['content-type']
-   except:
-       return 
-   if not (('/html' in mtype) or ('/xhtml' in mtype)):
-       return 
-   u = urllib2.urlopen(req)
-   bytes = u.read(262144)
-   u.close()
+    #Grab info from rscript
+    uri = 'http://rscript.org/lookup.php?type=youtubeinfo&id=' + input.group(2)
+    redirects = 0
+    while True:
+        req = urllib2.Request(uri, headers={'Accept':'text/html'})
+        req.add_header('User-Agent', 'OpenAnything/1.0 +http://diveintopython.org/')
+        u = urllib2.urlopen(req)
+        info = u.info()
+        u.close()
+        # info = web.head(uri)
+        if not isinstance(info, list):
+            status = '200'
+        else:
+            status = str(info[1])
+            info = info[0]
+        if status.startswith('3'):
+            uri = urlparse.urljoin(uri, info['Location'])
+        else: break
+        redirects += 1
+        if redirects >= 50:
+            return "Too many re-directs."
+    try: mtype = info['content-type']
+    except:
+        return 
+    if not (('/html' in mtype) or ('/xhtml' in mtype)):
+        return 
+    u = urllib2.urlopen(req)
+    bytes = u.read(262144)
+    u.close()
    
-   #Parse rscript info.
-   rtitle = re.search('(TITLE: )(.*)', bytes)
-   title = rtitle.group(2)
+    #Parse rscript info.
+    rtitle = re.search('(TITLE: )(.*)', bytes)
+    title = rtitle.group(2)
 
-   author = re.search('(AUTHOR: )(\S*) (20\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d).*', bytes)
-   uploader = author.group(2)
-   year = author.group(3)
-   month = author.group(4)
-   day = author.group(5)
-   hour = author.group(6)
-   minute = author.group(7)
-   uploaded = day + '/' + month + '/' + year + ', ' + hour + ':' + minute
+    author = re.search('(AUTHOR: )(\S*) (20\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d).*', bytes)
+    uploader = author.group(2)
+    year = author.group(3)
+    month = author.group(4)
+    day = author.group(5)
+    hour = author.group(6)
+    minute = author.group(7)
+    uploaded = day + '/' + month + '/' + year + ', ' + hour + ':' + minute
    
-   duration = int(re.search('(DURATION: )(.*)', bytes).group(2))
-   if duration < 1: length = 'LIVE'
-   else:
-      hours = duration / (60 * 60)
-      minutes = duration / 60
-      seconds = duration % 60
+    duration = int(re.search('(DURATION: )(.*)', bytes).group(2))
+    if duration < 1: length = 'LIVE'
+    else:
+        hours = duration / (60 * 60)
+        minutes = duration / 60
+        seconds = duration % 60
       
-      length = str(minutes) + 'mins ' + str(seconds) + 'secs'
-      if hours > 0: length = str(hours) + 'hours ' + str(length)
+        length = str(minutes) + 'mins ' + str(seconds) + 'secs'
+        if hours > 0: length = str(hours) + 'hours ' + str(length)
    
-   views = re.search('(VIEWS: )(.*)', bytes).group(2)
-   comments = re.search('(COMMENTS: )(.*)', bytes).group(2)
-   #Favorite, like, dislike
-   favorite = re.search('(FAVORITE: )([\d,]+) ([\d,]+) ([\d,]+)', bytes)
-   likes = favorite.group(3)
-   dislikes = favorite.group(4)
+    views = re.search('(VIEWS: )(.*)', bytes).group(2)
+    comments = re.search('(COMMENTS: )(.*)', bytes).group(2)
+    #Favorite, like, dislike
+    favorite = re.search('(FAVORITE: )([\d,]+) ([\d,]+) ([\d,]+)', bytes)
+    likes = favorite.group(3)
+    dislikes = favorite.group(4)
+
+    message = '[YouTube] Title: ' + title + ' | Uploader: ' + uploader + \
+              ' | Uploaded: ' + uploaded + ' | Length: ' + length + \
+              ' | Views: ' + views + ' | Comments: ' + comments + ' | Likes: '\
+              + likes + ' | Dislikes: ' + dislikes
    
-   message = '[YouTube] Title: ' + title + ' | Uploader: ' + uploader + ' | Uploaded: ' + uploaded + ' | Length: ' + length + ' | Views: ' + views + ' | Comments: ' + comments + ' | Likes: ' + likes + ' | Dislikes: ' + dislikes
-   
-   phenny.say(message)   
-ytinfo.rule = '.*(youtube.com/watch\S*v=|youtu.be/)([a-zA-Z0-9-]+).*'
+    phenny.say(message)   
+ytinfo.rule = '.*(youtube.com/watch\S*v=|youtu.be/)([\w]+).*'
 
 if __name__ == '__main__':
     print __doc__.strip()

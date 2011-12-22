@@ -60,13 +60,13 @@ me.rule = (['me'], r'(#?\S+) (.*)')
 me.priority = 'low'
 
 def mode(phenny, input):
+   # Can only be done in privmsg by an admin
    if input.sender.startswith('#'): return
    if input.admin:
       mode = input.group(1)
       phenny.write(('MODE ', phenny.nick + ' ' + mode))
 mode.rule = r'\.mode ([\+-]\S+)'
-mode.priority = 'low' 
-mode.example = '.mode +b'
+mode.priority = 'low'
 
 
 if __name__ == '__main__': 

@@ -18,6 +18,7 @@ db = MySQLdb.connect(host=wa_host, user=wa_user, passwd=wa_pass, db=wa_db)
 cur = db.cursor()
 
 def whats(phenny, input):
+   """Looks up a NationStates-related abbreviation or WA resolution"""
    givenum = 1
    #Retrieve resolution number and council
    w, abbr = input.groups()
@@ -51,6 +52,7 @@ def whats(phenny, input):
       phenny.say(message)
       
 whats.rule = ('$nick', ['whats', 'what\'s'], r'(.*)')
+whats.example = '$nick, what\'s GA34\n$nick, whats CoCR?'
 
 def makemessage(abbr, council, num, result, givenum):
    if not result:
@@ -97,21 +99,25 @@ def authored(phenny, input):
       message = message + ', plus ' + str(coauthored) + ' coauthorships'
    phenny.say(message + ' by ' + name)
 authored.commands = ['authored']
+authored.example = '.authored Unibot'
 
 def sc(phenny, input):
-   """.sc number - returns a link for the requested SC resolution."""
+   """Returns a link for the requested SC resolution."""
    lnk = 'http://www.nationstates.net/page=WA_past_resolutions/council=2/start='
    phenny.say(lnk + str(int(input.group(2)) - 1))
 sc.commands = ['sc']
+sc.example = '.sc 3'
 
 def ga(phenny, input):
-   """.ga number - returns a link for the requested GA resolution."""
+   """Returns a link for the requested GA resolution."""
    lnk = 'http://www.nationstates.net/page=WA_past_resolutions/council=1/start='
    phenny.say(lnk + str(int(input.group(2)) - 1))
 ga.commands = ['ga']
+ga.example = '.ga 132'
 
 def un(phenny, input):
-   """.un number - returns a link for the requested UN historical resolution."""
+   """Returns a link for the requested NSUN historical resolution."""
    lnk = 'http://www.nationstates.net/page=UN_past_resolutions/council=0/start='
    phenny.say(lnk + str(int(input.group(2)) - 1))
 un.commands = ['un']
+un.example = '.un 5'
