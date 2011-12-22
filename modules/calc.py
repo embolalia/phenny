@@ -35,13 +35,14 @@ c.commands = ['c','calc']
 c.example = '.c 5 + 3'
 
 def py(phenny, input):
-    """Evaluate a Python expression"""
-    query = input.group(2).encode('utf-8')
-    uri = 'http://tumbolia.appspot.com/py/'
-    answer = web.get(uri + web.urllib.quote(query))
-    if answer:
-        phenny.say(answer)
-    else: phenny.reply('Sorry, no result.')
+    """Evaluate a Python expression. Admin-only."""
+    if input.admin:
+        query = input.group(2).encode('utf-8')
+        uri = 'http://tumbolia.appspot.com/py/'
+        answer = web.get(uri + web.urllib.quote(query))
+        if answer:
+            phenny.say(answer)
+        else: phenny.reply('Sorry, no result.')
 py.commands = ['py']
 py.example = '.py len([1,2,3])'
 
